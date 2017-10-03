@@ -366,6 +366,16 @@
   <subsection|git commit>
 
   <\scm-chunk|git-utils.scm|true|false>
+    (tm-define (git-interactive-commit)
+
+    \ \ (:interactive #t)
+
+    \ \ (git-show-status)
+
+    \ \ (interactive (lambda (message) (git-commit message))))
+
+    \;
+
     (tm-define (git-commit message)
 
     \ \ (let* ((cmd (string-append
@@ -534,19 +544,6 @@
     <associate|auto-7|<tuple|4.2|?>>
     <associate|auto-8|<tuple|4.3|?>>
     <associate|auto-9|<tuple|4.4|?>>
-    <associate|chunk--1|<tuple||?>>
-    <associate|chunk-g-1|<tuple|g|?>>
-    <associate|chunk-gi-1|<tuple|gi|?>>
-    <associate|chunk-git--1|<tuple|git-|?>>
-    <associate|chunk-git-1|<tuple|git|?>>
-    <associate|chunk-git-u-1|<tuple|git-u|?>>
-    <associate|chunk-git-ut-1|<tuple|git-ut|?>>
-    <associate|chunk-git-uti-1|<tuple|git-uti|?>>
-    <associate|chunk-git-util-1|<tuple|git-util|?>>
-    <associate|chunk-git-utils-1|<tuple|git-utils|?>>
-    <associate|chunk-git-utils.-1|<tuple|git-utils.|?>>
-    <associate|chunk-git-utils.s-1|<tuple|git-utils.s|?>>
-    <associate|chunk-git-utils.sc-1|<tuple|git-utils.sc|?>>
     <associate|chunk-git-utils.scm-1|<tuple|git-utils.scm|?>>
     <associate|chunk-git-utils.scm-10|<tuple|git-utils.scm|?>>
     <associate|chunk-git-utils.scm-2|<tuple|git-utils.scm|?>>
@@ -559,3 +556,53 @@
     <associate|chunk-git-utils.scm-9|<tuple|git-utils.scm|?>>
   </collection>
 </references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|toc>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Module>
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-1><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>Constants>
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-2><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>Subroutines>
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-3><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|3.1<space|2spc>buffer
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-4>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>Git
+      Operations> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-5><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|4.1<space|2spc>git add
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-6>>
+
+      <with|par-left|<quote|1tab>|4.2<space|2spc>git unadd
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-7>>
+
+      <with|par-left|<quote|1tab>|4.3<space|2spc>git log
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-8>>
+
+      <with|par-left|<quote|1tab>|4.4<space|2spc>git diff
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-9>>
+
+      <with|par-left|<quote|1tab>|4.5<space|2spc>git status
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-10>>
+
+      <with|par-left|<quote|1tab>|4.6<space|2spc>git commit
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-11>>
+    </associate>
+  </collection>
+</auxiliary>

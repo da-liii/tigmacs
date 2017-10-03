@@ -3,7 +3,8 @@
 <style|<tuple|generic|literate>>
 
 <\body>
-  <doc-data|<doc-title|Tigmacs>>
+  <doc-data|<doc-title|Tigmacs>|<doc-author|<author-data|<author-name|Darcy
+  SHEN>>>>
 
   <name|Tigmacs> is a <TeXmacs> plugin that provides <name|Git>
   functionality. I love the ncurse tool <name|Tig>. <name|Tigmacs>, just as
@@ -77,16 +78,6 @@
 
     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (git-compare-with-master
     (current-buffer)))))))))
-
-    \;
-
-    (tm-define (git-interactive-commit)
-
-    \ \ (:interactive #t)
-
-    \ \ (git-show-status)
-
-    \ \ (interactive (lambda (message) (git-commit message))))
   </scm-chunk>
 
   <section|Plugin Initialization>

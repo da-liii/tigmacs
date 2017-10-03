@@ -149,6 +149,11 @@
     (and (> (length ret2) 0)
          (string-null? (cAr ret2))
          (map convert (cDr ret2)))))
+(tm-define (git-interactive-commit)
+  (:interactive #t)
+  (git-show-status)
+  (interactive (lambda (message) (git-commit message))))
+
 (tm-define (git-commit message)
   (let* ((cmd (string-append
                callgit " commit -m \"" message "\""))

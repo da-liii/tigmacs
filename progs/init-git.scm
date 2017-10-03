@@ -26,11 +26,6 @@
                         (buffer-has-diff? (current-buffer)))
                ("With the master"
                 (git-compare-with-master (current-buffer)))))))))
-
-(tm-define (git-interactive-commit)
-  (:interactive #t)
-  (git-show-status)
-  (interactive (lambda (message) (git-commit message))))
 (plugin-configure git
   (:require #t)
   (:initialize (git-initialize)))
