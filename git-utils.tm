@@ -365,7 +365,7 @@
 
   <subsection|git commit>
 
-  <\scm-chunk|git-utils.scm|true|false>
+  <\scm-chunk|git-utils.scm|true|true>
     (tm-define (git-interactive-commit)
 
     \ \ (:interactive #t)
@@ -389,15 +389,11 @@
     \ \ \ \ (set-message (string-append callgit " commit") message))
 
     \ \ (git-show-status))
+  </scm-chunk>
 
-    \;
+  <subsection|Low Level Git Operations>
 
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-    ;;; low level routines for git (involving hash code)
-
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+  <\scm-chunk|git-utils.scm|true|false>
     (tm-define (git-show object)
 
     \ \ (let* ((cmd (string-append callgit " show " object))
@@ -536,6 +532,7 @@
     <associate|auto-1|<tuple|1|?>>
     <associate|auto-10|<tuple|4.5|?>>
     <associate|auto-11|<tuple|4.6|?>>
+    <associate|auto-12|<tuple|4.7|?>>
     <associate|auto-2|<tuple|2|?>>
     <associate|auto-3|<tuple|3|?>>
     <associate|auto-4|<tuple|3.1|?>>
@@ -544,8 +541,22 @@
     <associate|auto-7|<tuple|4.2|?>>
     <associate|auto-8|<tuple|4.3|?>>
     <associate|auto-9|<tuple|4.4|?>>
+    <associate|chunk--1|<tuple||?>>
+    <associate|chunk-g-1|<tuple|g|?>>
+    <associate|chunk-gi-1|<tuple|gi|?>>
+    <associate|chunk-git--1|<tuple|git-|?>>
+    <associate|chunk-git-1|<tuple|git|?>>
+    <associate|chunk-git-u-1|<tuple|git-u|?>>
+    <associate|chunk-git-ut-1|<tuple|git-ut|?>>
+    <associate|chunk-git-uti-1|<tuple|git-uti|?>>
+    <associate|chunk-git-util-1|<tuple|git-util|?>>
+    <associate|chunk-git-utils-1|<tuple|git-utils|?>>
+    <associate|chunk-git-utils.-1|<tuple|git-utils.|?>>
+    <associate|chunk-git-utils.s-1|<tuple|git-utils.s|?>>
+    <associate|chunk-git-utils.sc-1|<tuple|git-utils.sc|?>>
     <associate|chunk-git-utils.scm-1|<tuple|git-utils.scm|?>>
     <associate|chunk-git-utils.scm-10|<tuple|git-utils.scm|?>>
+    <associate|chunk-git-utils.scm-11|<tuple|git-utils.scm|?>>
     <associate|chunk-git-utils.scm-2|<tuple|git-utils.scm|?>>
     <associate|chunk-git-utils.scm-3|<tuple|git-utils.scm|?>>
     <associate|chunk-git-utils.scm-4|<tuple|git-utils.scm|?>>

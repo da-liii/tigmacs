@@ -161,10 +161,6 @@
     ;; (display ret)
     (set-message (string-append callgit " commit") message))
   (git-show-status))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; low level routines for git (involving hash code)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (tm-define (git-show object)
   (let* ((cmd (string-append callgit " show " object))
          (ret (eval-system cmd)))
