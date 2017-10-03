@@ -1,26 +1,17 @@
 (texmacs-module (utils git git-tmfs)
   (:use (utils git git-utils)))
+(tm-define (git-show-log)
+  (cursor-history-add (cursor-path))
+  (revert-buffer "tmfs://git/log"))
 
-(tm-define (tmfs-url-commit . content)
-  (string-append "tmfs://commit/"
-                 (string-concatenate content)))
+(tm-define (git-show-status)
+  (cursor-history-add (cursor-path))
+  (revert-buffer "tmfs://git/status"))
 
-(tm-define (tmfs-url-git_history . content)
-  (string-append "tmfs://git_history/"
-                 (string-concatenate content)))
-
-(tm-define (string->commit str name)
-  (if (string-null? str) '()
-      (with alist (string-split str #\nl)
-            (list (string-take (first alist) 20)
-                  (second alist)
-                  (third alist)
-                  ($link (tmfs-url-commit (fourth alist)
-                                          (if (string-null? name)
-                                              ""
-                                              (string-append "|" name)))
-                         (string-take (fourth alist) 7))))))
-
+(tm-define (git-history name)
+  (cursor-history-add (cursor-path))
+  (with s (url->tmfs-string name)
+        (revert-buffer (tmfs-url-git_history s))))
 (tm-define ($staged-file status file)
   (cond ((string-starts? status "A")
          (list 'concat "new file:   " file (list 'new-line)))
@@ -39,10 +30,6 @@
   (cond ((== status "??")
          (list 'concat file (list 'new-line)))
         (else "")))
-
-(tm-define (git-show-status)
-  (cursor-history-add (cursor-path)) ;; FIXME: the meaning of this line
-  (revert-buffer "tmfs://git/status"))
 
 (tm-define (git-status-content)
   (with s (git-status)
@@ -68,9 +55,6 @@
                                               ($untracked-file status
                                                                file)))))))))
 
-(tm-define (git-show-log)
-  (cursor-history-add (cursor-path)) ;; FIXME: the meaning of this line
-  (revert-buffer "tmfs://git/log"))
 
 (tm-define (git-log-content)
   (with h (git-log)
@@ -99,11 +83,9 @@
         ((== name "log")
          (git-log-content))
         (else '())))
-
-(tm-define (git-history name)
-  (cursor-history-add (cursor-path)) ;; FIXME: the meaning of this line
-  (with s (url->tmfs-string name)
-        (revert-buffer (tmfs-url-git_history s))))
+(tm-define (tmfs-url-git_history . content)
+  (string-append "tmfs://git_history/"
+                 (string-concatenate content)))
 
 (tmfs-title-handler (git_history name doc)
   (with u (tmfs-string->url name)
@@ -127,31 +109,14 @@
                                               " by " by
                                               " on " date)
                                      (utf8->cork msg))))))))))
-
+(tm-define (tmfs-url-commit . content)
+  (string-append "tmfs://commit/"
+                 (string-concatenate content)))
 (tmfs-format-handler (commit name)
   (if (string-contains name "|")
       (with u (tmfs-string->url (tmfs-cdr (string-replace name "|" "/")))
             (url-format u))
       (url-format (tmfs-string->url name))))
-
-(define (string-repeat str n)
-  (do ((i 1 (1+ i))
-       (ret "" (string-append ret str)))
-      ((> i n) ret)))
-
-(define (get-row-from-x x maxs maxv)
-  (define (get-length nr)
-    (let* ((ret (/ (* nr (min maxs maxv)) maxv)))
-      (if (and (> ret 0) (< ret 1)) 1
-          ret)))
-  ‘(row (cell ,(third x))
-        (cell ,(number->string (+ (first x) (second x))))
-        (cell (concat (with color green
-                            ,(string-repeat "+"
-                                            (get-length (first x))))
-                      (with color red
-                            ,(string-repeat "-"
-                                            (get-length (second x))))))))
 
 (tmfs-load-handler (commit name)
   (define (sum2 x)
@@ -193,3 +158,33 @@
                   " insertions(" (verbatim (with color green "+")) "), "
                   ,del
                   " deletions(" (verbatim (with color red "-")) ")")))))
+
+(tm-define (string->commit str name)
+  (if (string-null? str) '()
+      (with alist (string-split str #\nl)
+            (list (string-take (first alist) 20)
+                  (second alist)
+                  (third alist)
+                  ($link (tmfs-url-commit (fourth alist)
+                                          (if (string-null? name)
+                                              ""
+                                              (string-append "|" name)))
+                         (string-take (fourth alist) 7))))))
+(define (string-repeat str n)
+  (do ((i 1 (1+ i))
+       (ret "" (string-append ret str)))
+      ((> i n) ret)))
+
+(define (get-row-from-x x maxs maxv)
+  (define (get-length nr)
+    (let* ((ret (/ (* nr (min maxs maxv)) maxv)))
+      (if (and (> ret 0) (< ret 1)) 1
+          ret)))
+  ‘(row (cell ,(third x))
+        (cell ,(number->string (+ (first x) (second x))))
+        (cell (concat (with color green
+                            ,(string-repeat "+"
+                                            (get-length (first x))))
+                      (with color red
+                            ,(string-repeat "-"
+                                            (get-length (second x))))))))

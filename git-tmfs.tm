@@ -3,57 +3,55 @@
 <style|<tuple|generic|literate>>
 
 <\body>
-  <\scm-chunk|git-tmfs.scm|false|false>
+  <doc-data|<doc-title|tmfs for Git>>
+
+  <\scm-chunk|git-tmfs.scm|false|true>
     (texmacs-module (utils git git-tmfs)
 
     \ \ (:use (utils git git-utils)))
+  </scm-chunk>
+
+  <section|Menu>
+
+  <shell|<tree|/|<tree|/git|/git/log|/git/status>|/git_history|/commit>>
+
+  \;
+
+  <todo|What is the meaning of cursor-history-add>
+
+  <\scm-chunk|git-tmfs.scm|true|true>
+    (tm-define (git-show-log)
+
+    \ \ (cursor-history-add (cursor-path))
+
+    \ \ (revert-buffer "tmfs://git/log"))
 
     \;
 
-    (tm-define (tmfs-url-commit . content)
+    (tm-define (git-show-status)
 
-    \ \ (string-append "tmfs://commit/"
+    \ \ (cursor-history-add (cursor-path))
 
-    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (string-concatenate content)))
-
-    \;
-
-    (tm-define (tmfs-url-git_history . content)
-
-    \ \ (string-append "tmfs://git_history/"
-
-    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (string-concatenate content)))
+    \ \ (revert-buffer "tmfs://git/status"))
 
     \;
 
-    (tm-define (string-\<gtr\>commit str name)
+    (tm-define (git-history name)
 
-    \ \ (if (string-null? str) '()
+    \ \ (cursor-history-add (cursor-path))
 
-    \ \ \ \ \ \ (with alist (string-split str #\\nl)
+    \ \ (with s (url-\<gtr\>tmfs-string name)
 
-    \ \ \ \ \ \ \ \ \ \ \ \ (list (string-take (first alist) 20)
+    \ \ \ \ \ \ \ \ (revert-buffer (tmfs-url-git_history s))))
+  </scm-chunk>
 
-    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (second alist)
+  <section|Handlers>
 
-    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (third alist)
+  <section|Route>
 
-    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ($link (tmfs-url-commit (fourth
-    alist)
+  <subsection|<shell|/git/*>>
 
-    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (if
-    (string-null? name)
-
-    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ""
-
-    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (string-append
-    "\|" name)))
-
-    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (string-take (fourth
-    alist) 7))))))
-
-    \;
-
+  <\scm-chunk|git-tmfs.scm|true|true>
     (tm-define ($staged-file status file)
 
     \ \ (cond ((string-starts? status "A")
@@ -89,14 +87,6 @@
     \ \ \ \ \ \ \ \ \ (list 'concat file (list 'new-line)))
 
     \ \ \ \ \ \ \ \ (else "")))
-
-    \;
-
-    (tm-define (git-show-status)
-
-    \ \ (cursor-history-add (cursor-path)) ;; FIXME: the meaning of this line
-
-    \ \ (revert-buffer "tmfs://git/status"))
 
     \;
 
@@ -159,12 +149,6 @@
 
     \;
 
-    (tm-define (git-show-log)
-
-    \ \ (cursor-history-add (cursor-path)) ;; FIXME: the meaning of this line
-
-    \ \ (revert-buffer "tmfs://git/log"))
-
     \;
 
     (tm-define (git-log-content)
@@ -226,16 +210,16 @@
     \ \ \ \ \ \ \ \ \ (git-log-content))
 
     \ \ \ \ \ \ \ \ (else '())))
+  </scm-chunk>
 
-    \;
+  <subsection|<shell|/git_history/*>>
 
-    (tm-define (git-history name)
+  <\scm-chunk|git-tmfs.scm|true|true>
+    (tm-define (tmfs-url-git_history . content)
 
-    \ \ (cursor-history-add (cursor-path)) ;; FIXME: the meaning of this line
+    \ \ (string-append "tmfs://git_history/"
 
-    \ \ (with s (url-\<gtr\>tmfs-string name)
-
-    \ \ \ \ \ \ \ \ (revert-buffer (tmfs-url-git_history s))))
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (string-concatenate content)))
 
     \;
 
@@ -291,8 +275,16 @@
 
     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (utf8-\<gtr\>cork
     msg))))))))))
+  </scm-chunk>
 
-    \;
+  <subsection|<shell|/commit>>
+
+  <\scm-chunk|git-tmfs.scm|true|true>
+    (tm-define (tmfs-url-commit . content)
+
+    \ \ (string-append "tmfs://commit/"
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (string-concatenate content)))
 
     (tmfs-format-handler (commit name)
 
@@ -304,48 +296,6 @@
     \ \ \ \ \ \ \ \ \ \ \ \ (url-format u))
 
     \ \ \ \ \ \ (url-format (tmfs-string-\<gtr\>url name))))
-
-    \;
-
-    (define (string-repeat str n)
-
-    \ \ (do ((i 1 (1+ i))
-
-    \ \ \ \ \ \ \ (ret "" (string-append ret str)))
-
-    \ \ \ \ \ \ ((\<gtr\> i n) ret)))
-
-    \;
-
-    (define (get-row-from-x x maxs maxv)
-
-    \ \ (define (get-length nr)
-
-    \ \ \ \ (let* ((ret (/ (* nr (min maxs maxv)) maxv)))
-
-    \ \ \ \ \ \ (if (and (\<gtr\> ret 0) (\<less\> ret 1)) 1
-
-    \ \ \ \ \ \ \ \ \ \ ret)))
-
-    \ \ `(row (cell ,(third x))
-
-    \ \ \ \ \ \ \ \ (cell ,(number-\<gtr\>string (+ (first x) (second x))))
-
-    \ \ \ \ \ \ \ \ (cell (concat (with color green
-
-    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,(string-repeat
-    "+"
-
-    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (get-length
-    (first x))))
-
-    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (with color red
-
-    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,(string-repeat
-    "-"
-
-    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (get-length
-    (second x))))))))
 
     \;
 
@@ -434,6 +384,78 @@
 
     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ " deletions(" (verbatim (with color
     red "-")) ")")))))
+
+    \;
+
+    (tm-define (string-\<gtr\>commit str name)
+
+    \ \ (if (string-null? str) '()
+
+    \ \ \ \ \ \ (with alist (string-split str #\\nl)
+
+    \ \ \ \ \ \ \ \ \ \ \ \ (list (string-take (first alist) 20)
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (second alist)
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (third alist)
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ($link (tmfs-url-commit (fourth
+    alist)
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (if
+    (string-null? name)
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ""
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (string-append
+    "\|" name)))
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (string-take (fourth
+    alist) 7))))))
+  </scm-chunk>
+
+  <section|Routines>
+
+  <\scm-chunk|git-tmfs.scm|true|false>
+    (define (string-repeat str n)
+
+    \ \ (do ((i 1 (1+ i))
+
+    \ \ \ \ \ \ \ (ret "" (string-append ret str)))
+
+    \ \ \ \ \ \ ((\<gtr\> i n) ret)))
+
+    \;
+
+    (define (get-row-from-x x maxs maxv)
+
+    \ \ (define (get-length nr)
+
+    \ \ \ \ (let* ((ret (/ (* nr (min maxs maxv)) maxv)))
+
+    \ \ \ \ \ \ (if (and (\<gtr\> ret 0) (\<less\> ret 1)) 1
+
+    \ \ \ \ \ \ \ \ \ \ ret)))
+
+    \ \ `(row (cell ,(third x))
+
+    \ \ \ \ \ \ \ \ (cell ,(number-\<gtr\>string (+ (first x) (second x))))
+
+    \ \ \ \ \ \ \ \ (cell (concat (with color green
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,(string-repeat
+    "+"
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (get-length
+    (first x))))
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (with color red
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,(string-repeat
+    "-"
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (get-length
+    (second x))))))))
   </scm-chunk>
 </body>
 
@@ -442,6 +464,52 @@
 
 <\references>
   <\collection>
+    <associate|auto-1|<tuple|1|?>>
+    <associate|auto-2|<tuple|2|?>>
+    <associate|auto-3|<tuple|3|?>>
+    <associate|auto-4|<tuple|3.1|?>>
+    <associate|auto-5|<tuple|3.2|?>>
+    <associate|auto-6|<tuple|3.3|?>>
+    <associate|auto-7|<tuple|4|?>>
     <associate|chunk-git-tmfs.scm-1|<tuple|git-tmfs.scm|?>>
+    <associate|chunk-git-tmfs.scm-2|<tuple|git-tmfs.scm|?>>
+    <associate|chunk-git-tmfs.scm-3|<tuple|git-tmfs.scm|?>>
+    <associate|chunk-git-tmfs.scm-4|<tuple|git-tmfs.scm|?>>
+    <associate|chunk-git-tmfs.scm-5|<tuple|git-tmfs.scm|?>>
+    <associate|chunk-git-tmfs.scm-6|<tuple|git-tmfs.scm|?>>
   </collection>
 </references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|toc>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Menu>
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-1><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>Handlers>
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-2><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>Route>
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-3><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|3.1<space|2spc><with|mode|<quote|prog>|prog-language|<quote|shell>|font-family|<quote|rm>|/git/*>
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-4>>
+
+      <with|par-left|<quote|1tab>|3.2<space|2spc><with|mode|<quote|prog>|prog-language|<quote|shell>|font-family|<quote|rm>|/git_history/*>
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-5>>
+
+      <with|par-left|<quote|1tab>|3.3<space|2spc><with|mode|<quote|prog>|prog-language|<quote|shell>|font-family|<quote|rm>|/commit>
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-6>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>Routines>
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-7><vspace|0.5fn>
+    </associate>
+  </collection>
+</auxiliary>
