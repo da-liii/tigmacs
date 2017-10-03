@@ -6,7 +6,7 @@
   <doc-data|<doc-title|Tigmacs>>
 
   <name|Tigmacs> is a <TeXmacs> plugin that provides <name|Git>
-  functionality. I love the ncurse tool <name|Tig>. <name|Tigmacs> just as
+  functionality. I love the ncurse tool <name|Tig>. <name|Tigmacs>, just as
   the name indicates, mimics the behavior of <name|Tig>.
 
   <section|Module>
