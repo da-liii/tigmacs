@@ -1,4 +1,4 @@
-(texmacs-module (git-utils))
+(texmacs-module (utils git git-utils))
 (define callgit "git")
 (define NR_LOG_OPTION " -1000 ")
 

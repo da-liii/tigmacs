@@ -4,11 +4,9 @@
 
 <\body>
   <\scm-chunk|git-tmfs.scm|false|false>
-    (texmacs-module (git-tmfs))
+    (texmacs-module (utils git git-tmfs)
 
-    \;
-
-    (import-from (git-utils))
+    \ \ (:use (utils git git-utils)))
 
     \;
 
@@ -444,18 +442,6 @@
 
 <\references>
   <\collection>
-    <associate|chunk--1|<tuple||?>>
-    <associate|chunk-g-1|<tuple|g|?>>
-    <associate|chunk-gi-1|<tuple|gi|?>>
-    <associate|chunk-git--1|<tuple|git-|?>>
-    <associate|chunk-git-1|<tuple|git|?>>
-    <associate|chunk-git-t-1|<tuple|git-t|?>>
-    <associate|chunk-git-tm-1|<tuple|git-tm|?>>
-    <associate|chunk-git-tmf-1|<tuple|git-tmf|?>>
-    <associate|chunk-git-tmfs-1|<tuple|git-tmfs|?>>
-    <associate|chunk-git-tmfs.-1|<tuple|git-tmfs.|?>>
-    <associate|chunk-git-tmfs.s-1|<tuple|git-tmfs.s|?>>
-    <associate|chunk-git-tmfs.sc-1|<tuple|git-tmfs.sc|?>>
     <associate|chunk-git-tmfs.scm-1|<tuple|git-tmfs.scm|?>>
   </collection>
 </references>

@@ -1,6 +1,5 @@
-(texmacs-module (git-tmfs))
-
-(import-from (git-utils))
+(texmacs-module (utils git git-tmfs)
+  (:use (utils git git-utils)))
 
 (tm-define (tmfs-url-commit . content)
   (string-append "tmfs://commit/"

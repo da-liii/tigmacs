@@ -1,10 +1,11 @@
-(import-from (git-utils) (git-tmfs))
-(tm-define (git-initialize)
-  (menu-bind
-    texmacs-extra-menu
-    (former)
-    (=> "Git"
-       (when (git-versioned? (current-buffer))
+(texmacs-module (utils git git-menu)
+  (:use (utils git git-utils)
+        (utils git git-tmfs)))
+(menu-bind
+  texmacs-extra-menu
+  (former)
+  (=> "Git"
+    (when (git-versioned? (current-buffer))
          ("Log" (git-show-log))
          ("Status" (git-show-status))
          ("Commit" (git-interactive-commit))
@@ -25,7 +26,4 @@
              (when (and (not (buffer-tmfs? (current-buffer)))
                         (buffer-has-diff? (current-buffer)))
                ("With the master"
-                (git-compare-with-master (current-buffer)))))))))
-(plugin-configure git
-  (:require #t)
-  (:initialize (git-initialize)))
+                (git-compare-with-master (current-buffer))))))))

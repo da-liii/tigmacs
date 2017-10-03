@@ -9,7 +9,7 @@
   <section|Module>
 
   <\scm-chunk|git-utils.scm|false|true>
-    (texmacs-module (git-utils))
+    (texmacs-module (utils git git-utils))
   </scm-chunk>
 
   <section|Constants>

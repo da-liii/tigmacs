@@ -12,24 +12,26 @@
 
   <section|Module>
 
-  <\scm-chunk|init-git.scm|false|true>
-    (import-from (git-utils) (git-tmfs))
+  <\scm-chunk|git-menu.scm|false|true>
+    (texmacs-module (utils git git-menu)
+
+    \ \ (:use (utils git git-utils)
+
+    \ \ \ \ \ \ \ \ (utils git git-tmfs)))
   </scm-chunk>
 
   <section|Menu>
 
-  <\scm-chunk|init-git.scm|true|true>
-    (tm-define (git-initialize)
+  <\scm-chunk|git-menu.scm|true|false>
+    (menu-bind
 
-    \ \ (menu-bind
+    \ \ texmacs-extra-menu
 
-    \ \ \ \ texmacs-extra-menu
+    \ \ (former)
 
-    \ \ \ \ (former)
+    \ \ (=\<gtr\> "Git"
 
-    \ \ \ \ (=\<gtr\> "Git"
-
-    \ \ \ \ \ \ \ (when (git-versioned? (current-buffer))
+    \ \ \ \ (when (git-versioned? (current-buffer))
 
     \ \ \ \ \ \ \ \ \ ("Log" (git-show-log))
 
@@ -77,17 +79,7 @@
     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("With the master"
 
     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (git-compare-with-master
-    (current-buffer)))))))))
-  </scm-chunk>
-
-  <section|Plugin Initialization>
-
-  <\scm-chunk|init-git.scm|true|false>
-    (plugin-configure git
-
-    \ \ (:require #t)
-
-    \ \ (:initialize (git-initialize)))
+    (current-buffer))))))))
   </scm-chunk>
 </body>
 
@@ -98,10 +90,8 @@
   <\collection>
     <associate|auto-1|<tuple|1|?>>
     <associate|auto-2|<tuple|2|?>>
-    <associate|auto-3|<tuple|3|?>>
-    <associate|chunk-init-git.scm-1|<tuple|init-git.scm|?>>
-    <associate|chunk-init-git.scm-2|<tuple|init-git.scm|?>>
-    <associate|chunk-init-git.scm-3|<tuple|init-git.scm|?>>
+    <associate|chunk-git-menu.scm-1|<tuple|git-menu.scm|?>>
+    <associate|chunk-git-menu.scm-2|<tuple|git-menu.scm|?>>
   </collection>
 </references>
 
@@ -115,10 +105,6 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>Menu>
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-2><vspace|0.5fn>
-
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>Plugin
-      Initialization> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-3><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
