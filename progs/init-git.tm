@@ -22,9 +22,11 @@
 
     \ \ (menu-bind
 
-    \ \ \ texmacs-extra-menu
+    \ \ \ \ texmacs-extra-menu
 
-    \ \ \ (=\<gtr\> "Git"
+    \ \ \ \ (former)
+
+    \ \ \ \ (=\<gtr\> "Git"
 
     \ \ \ \ \ \ \ (when (git-versioned? (current-buffer))
 

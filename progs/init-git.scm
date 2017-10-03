@@ -1,8 +1,9 @@
 (import-from (git-utils) (git-tmfs))
 (tm-define (git-initialize)
   (menu-bind
-   texmacs-extra-menu
-   (=> "Git"
+    texmacs-extra-menu
+    (former)
+    (=> "Git"
        (when (git-versioned? (current-buffer))
          ("Log" (git-show-log))
          ("Status" (git-show-status))
