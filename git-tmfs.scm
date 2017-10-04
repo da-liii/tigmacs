@@ -139,13 +139,13 @@
          ($tmfs-title "Commit Message of " (string-take name 7))
          (if (== name p)
              "parent 0"
-             ‘(concat "parent "
+             `(concat "parent "
                       ,($link (tmfs-url-commit p) p)))
          (list 'new-line)
-         ($for (x m) ‘(concat ,(utf8->cork x) ,(list 'new-line)))
+         ($for (x m) `(concat ,(utf8->cork x) ,(list 'new-line)))
          "-----"
          (list 'new-line)
-         ‘(verbatim
+         `(verbatim
            (tabular
             (tformat
              (cwith "1" "-1" "1" "-1"
@@ -153,7 +153,7 @@
              ,(cons 'table
                     (map (lambda (x) (get-row-from-x x maxs maxv)) d)))))
          (list 'new-line)
-         ‘(concat ,nr " files changed, "
+         `(concat ,nr " files changed, "
                   ,ins
                   " insertions(" (verbatim (with color green "+")) "), "
                   ,del
@@ -180,7 +180,7 @@
     (let* ((ret (/ (* nr (min maxs maxv)) maxv)))
       (if (and (> ret 0) (< ret 1)) 1
           ret)))
-  ‘(row (cell ,(third x))
+  `(row (cell ,(third x))
         (cell ,(number->string (+ (first x) (second x))))
         (cell (concat (with color green
                             ,(string-repeat "+"
