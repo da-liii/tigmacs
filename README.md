@@ -10,6 +10,9 @@ echo "(use-modules (utils git git-menu))" >> $HOME/.TeXmacs/progs/my-init-texmac
 ## Screenshot
 ### git status
 ![](screenshots/git-status.png)
-### git diff
 ### git log
+![](screenshots/git-log.png)
+### git diff
+![](screenshots/git-diff.png)
 ### git log (current-buffer)
+![](screenshots/git-history.png)
