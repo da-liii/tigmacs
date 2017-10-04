@@ -106,7 +106,7 @@
                              ($with (date by msg commit) x
                                     ($describe-item
                                      ($inline "Commit " commit
-                                              " by " by
+                                              " by " (utf8->cork by)
                                               " on " date)
                                      (utf8->cork msg))))))))))
 (tm-define (tmfs-url-commit . content)
