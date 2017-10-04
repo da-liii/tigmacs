@@ -3,12 +3,8 @@
 <style|<tuple|generic|literate>>
 
 <\body>
-  <doc-data|<doc-title|Tigmacs>|<doc-author|<author-data|<author-name|Darcy
+  <doc-data|<doc-title|Menu>|<doc-author|<author-data|<author-name|Darcy
   SHEN>>>>
-
-  <name|Tigmacs> is a <TeXmacs> plugin that provides <name|Git>
-  functionality. I love the ncurse tool <name|Tig>. <name|Tigmacs>, just as
-  the name indicates, mimics the behavior of <name|Tig>.
 
   <section|Module>
 
