@@ -8,6 +8,8 @@
 
   <section|Module>
 
+  <todo|explain the texmacs module system>
+
   <\scm-chunk|git-menu.scm|false|true>
     (texmacs-module (utils git git-menu)
 
@@ -17,6 +19,8 @@
   </scm-chunk>
 
   <section|Menu>
+
+  <todo|what is <scm|(former)>>
 
   <\scm-chunk|git-menu.scm|true|false>
     (menu-bind
