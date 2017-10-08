@@ -2,7 +2,7 @@
 (define callgit "git")
 (define NR_LOG_OPTION " -1000 ")
 
-(define gitroot "invalid")
+(define gitroot "/")
 (define (delete-tail-newline a-str)
   (if (string-ends? a-str "\n")
       (delete-tail-newline (string-drop-right a-str 1))
@@ -12,7 +12,7 @@
          (pdir (url-expand (url-append dir ".."))))
     (cond ((url-directory? git-dir)
            (string-replace (url->string dir) "\\" "/"))
-          ((== pdir dir) "invalid")
+          ((== pdir dir) "/")
           (else (git-root pdir)))))
 
 (tm-define (git-versioned? name)
@@ -24,7 +24,7 @@
     (set! callgit
           (string-append "git --work-tree=" gitroot
                          " --git-dir=" gitroot "/.git")))
-  (url-directory? gitroot))
+  (!= gitroot "/"))
 
 (tm-define (buffer-status name)
   (let* ((name-s (url->string name))
