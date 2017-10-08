@@ -3,8 +3,8 @@
 <style|<tuple|generic|literate>>
 
 <\body>
-  <doc-data|<doc-title|Utils for Git>|<doc-author|<author-data|<author-name|Darcy
-  SHEN>>>>
+  <strong|><doc-data|<doc-title|Utils for
+  Git>|<doc-author|<author-data|<author-name|Darcy SHEN>>>>
 
   <section|Module>
 
@@ -14,6 +14,11 @@
 
   <section|Constants>
 
+  <verbatim|gitroot> is a variable that holds the git root of the current
+  buffer, initially set to <verbatim|/>. Assuming <verbatim|/.git> is not
+  exist, we can use <scm|(!= gitroot "/")> to check if the current buffer is
+  under a git-versioned directory.
+
   <\scm-chunk|git-utils.scm|true|true>
     (define callgit "git")
 
@@ -21,7 +26,7 @@
 
     \;
 
-    (define gitroot "invalid")
+    (define gitroot "/")
   </scm-chunk>
 
   <section|Subroutines>
@@ -50,7 +55,7 @@
     \ \ \ \ \ \ \ \ \ \ \ (string-replace (url-\<gtr\>string dir) "\\\\"
     "/"))
 
-    \ \ \ \ \ \ \ \ \ \ ((== pdir dir) "invalid")
+    \ \ \ \ \ \ \ \ \ \ ((== pdir dir) "/")
 
     \ \ \ \ \ \ \ \ \ \ (else (git-root pdir)))))
 
@@ -75,7 +80,7 @@
     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ " --git-dir=" gitroot
     "/.git")))
 
-    \ \ (url-directory? gitroot))
+    \ \ (!= gitroot "/"))
 
     \;
 
@@ -541,19 +546,6 @@
     <associate|auto-7|<tuple|4.2|?>>
     <associate|auto-8|<tuple|4.3|?>>
     <associate|auto-9|<tuple|4.4|?>>
-    <associate|chunk--1|<tuple||?>>
-    <associate|chunk-g-1|<tuple|g|?>>
-    <associate|chunk-gi-1|<tuple|gi|?>>
-    <associate|chunk-git--1|<tuple|git-|?>>
-    <associate|chunk-git-1|<tuple|git|?>>
-    <associate|chunk-git-u-1|<tuple|git-u|?>>
-    <associate|chunk-git-ut-1|<tuple|git-ut|?>>
-    <associate|chunk-git-uti-1|<tuple|git-uti|?>>
-    <associate|chunk-git-util-1|<tuple|git-util|?>>
-    <associate|chunk-git-utils-1|<tuple|git-utils|?>>
-    <associate|chunk-git-utils.-1|<tuple|git-utils.|?>>
-    <associate|chunk-git-utils.s-1|<tuple|git-utils.s|?>>
-    <associate|chunk-git-utils.sc-1|<tuple|git-utils.sc|?>>
     <associate|chunk-git-utils.scm-1|<tuple|git-utils.scm|?>>
     <associate|chunk-git-utils.scm-10|<tuple|git-utils.scm|?>>
     <associate|chunk-git-utils.scm-11|<tuple|git-utils.scm|?>>
@@ -614,6 +606,10 @@
       <with|par-left|<quote|1tab>|4.6<space|2spc>git commit
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-11>>
+
+      <with|par-left|<quote|1tab>|4.7<space|2spc>Low Level Git Operations
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-12>>
     </associate>
   </collection>
 </auxiliary>
